@@ -13,6 +13,7 @@ class ServiceSeeder extends Seeder
      */
     public function run(): void
     {
+
         $services = [
             'Business Consultation',
             'Life Coaching Session',
@@ -29,7 +30,7 @@ class ServiceSeeder extends Seeder
                 'name' => $service,
                 'description' => fake()->sentence(nbWords: 50),
                 'price' => rand(100, 1000),
-                'duration' => rand(1, 30) . ' days',
+                'available' => rand(0, 1),
             ]);
         }
     }

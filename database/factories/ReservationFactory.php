@@ -21,7 +21,7 @@ class ReservationFactory extends Factory
         return [
             'user_id' => User::inRandomOrder()->first()->id ? : User::factory(),
             'service_id' => Service::inRandomOrder()->first()->id ? : Service::factory(),
-            'date_time' => $this->faker->dateTime('+1 days', '+1 month'),
+            'date_time' => $this->faker->dateTimeBetween('+1 days', '+1 month'),
             'status' => $this->faker->randomElement(['pending', 'confirmed', 'cancelled']),
         ];
     }
