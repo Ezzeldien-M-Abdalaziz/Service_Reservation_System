@@ -1,0 +1,89 @@
+@extends('layouts.frontend.app')
+@section('body')
+
+<main class="flex-grow flex items-center justify-center py-12">
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+      <div class="text-center mb-8">
+        <h1 class="text-2xl font-bold text-gray-900">Create an Account</h1>
+        <p class="text-gray-600 mt-2">Join ReserveEasy to book services</p>
+      </div>
+
+      <form>
+        <div class="grid grid-cols-2 gap-4 mb-4">
+          <div>
+            <label for="first-name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+            <input
+              type="text"
+              id="first-name"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500"
+              required
+            />
+          </div>
+
+          <div>
+            <label for="last-name" class="block text-sm font-medium text-gray-700 mb-1">User Name</label>
+            <input
+              type="text"
+              id="last-name"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+          <input
+            type="email"
+            id="email"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500"
+            placeholder="your@email.com"
+            required
+          />
+        </div>
+
+
+        <div class="mb-4">
+          <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+          <input
+            type="password"
+            id="password"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500"
+            placeholder="••••••••"
+            required
+          />
+        </div>
+
+        <div class="mb-6">
+          <label for="confirm-password" class="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+          <input
+            type="password"
+            id="confirm-password"
+            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500"
+            placeholder="••••••••"
+            required
+          />
+        </div>
+
+        <div class="flex items-center mb-6">
+          <input type="checkbox" id="terms" class="h-4 w-4 text-brand-600 border-gray-300 rounded" required />
+          <label for="terms" class="ml-2 block text-sm text-gray-700">
+            I agree to the <a href="#" class="text-brand-600 hover:text-brand-500">Terms of Service</a> and <a href="#" class="text-brand-600 hover:text-brand-500">Privacy Policy</a>
+          </label>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-brand-600 text-white py-2 px-4 rounded-md hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
+        >
+          Create Account
+        </button>
+      </form>
+
+      <p class="mt-6 text-center text-sm text-gray-600">
+        Already have an account?
+        <a href="/login.html" class="font-medium text-brand-600 hover:text-brand-500">Login</a>
+      </p>
+    </div>
+  </main>
+@endsection
