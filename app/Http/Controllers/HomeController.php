@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Service;
-use Illuminate\Http\Request;
+
 
 class HomeController extends Controller
 {
@@ -23,10 +22,5 @@ class HomeController extends Controller
         return view('auth.register');
     }
 
-    public function services()
-    {
-        $services = Service::select('id', 'name' , 'description')->get();
 
-        return view('frontend.services' , compact('services'));
-    }
 }

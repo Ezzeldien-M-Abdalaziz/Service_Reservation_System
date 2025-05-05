@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('price');
             $table->boolean('available')->default(1);
+            $table->integer('rating')->default(0);
             $table->timestamps();
         });
     }

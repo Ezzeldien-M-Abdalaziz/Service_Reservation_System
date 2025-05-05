@@ -23,7 +23,6 @@
           <div class="mb-6">
             <div class="flex items-center justify-between mb-1">
               <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-              <a href="#" class="text-sm text-brand-600 hover:text-brand-500">Forgot password?</a>
             </div>
             <input
               type="password"
@@ -34,10 +33,6 @@
             />
           </div>
 
-          <div class="flex items-center mb-6">
-            <input type="checkbox" id="remember" class="h-4 w-4 text-brand-600 border-gray-300 rounded" />
-            <label for="remember" class="ml-2 block text-sm text-gray-700">Remember me</label>
-          </div>
 
           <button
             type="submit"
@@ -49,7 +44,7 @@
 
         <p class="mt-6 text-center text-sm text-gray-600">
           Don't have an account?
-          <a href="/register.html" class="font-medium text-brand-600 hover:text-brand-500">Sign up</a>
+          <a href="{{route('register')}}" class="font-medium text-brand-600 hover:text-brand-500">Sign up</a>
         </p>
       </div>
     </main>

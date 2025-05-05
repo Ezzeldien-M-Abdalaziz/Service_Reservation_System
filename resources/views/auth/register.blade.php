@@ -82,7 +82,7 @@
 
       <p class="mt-6 text-center text-sm text-gray-600">
         Already have an account?
-        <a href="/login.html" class="font-medium text-brand-600 hover:text-brand-500">Login</a>
+        <a href="{{route('login')}}" class="font-medium text-brand-600 hover:text-brand-500">Login</a>
       </p>
     </div>
   </main>

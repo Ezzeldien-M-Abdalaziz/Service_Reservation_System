@@ -13,9 +13,9 @@
               <h3 class="font-bold text-lg mb-4">Quick Links</h3>
               <ul class="space-y-2">
                 <li><a href="/" class="text-gray-600 hover:text-brand-500">Home</a></li>
-                <li><a href="/services.html" class="text-gray-600 hover:text-brand-500">Services</a></li>
-                <li><a href="/login.html" class="text-gray-600 hover:text-brand-500">Login</a></li>
-                <li><a href="/register.html" class="text-gray-600 hover:text-brand-500">Register</a></li>
+                <li><a href="{{route('services')}}" class="text-gray-600 hover:text-brand-500">Services</a></li>
+                <li><a href="{{route('login')}}" class="text-gray-600 hover:text-brand-500">Login</a></li>
+                <li><a href="{{route('register')}}" class="text-gray-600 hover:text-brand-500">Register</a></li>
               </ul>
             </div>
 
