@@ -14,14 +14,20 @@ class DashboardController extends Controller
         $upcomingReservations = Reservation::with('user', 'service')
         ->where('user_id', Auth::user()->id)
         ->where('to', '>', now())
+        ->where('status', '!=', 'cancelled')
         ->get();
-
 
         $pastReservations = Reservation::with('user', 'service')
         ->where('user_id', Auth::user()->id)
         ->where('to', '<', now())
+        ->where('status', '!=', 'cancelled')
         ->get();
 
-        return view('frontend.dashboard' , compact('upcomingReservations' , 'pastReservations'));
+        $cancelledReservations = Reservation::with('user', 'service')
+        ->where('user_id', Auth::user()->id)
+        ->where('status', 'cancelled')
+        ->get();
+
+        return view('frontend.dashboard' , compact('upcomingReservations' , 'pastReservations' , 'cancelledReservations'));
     }
 }

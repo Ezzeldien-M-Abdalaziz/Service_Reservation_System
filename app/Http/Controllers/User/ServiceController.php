@@ -27,11 +27,12 @@ class ServiceController extends Controller
         }
     }
 
-    public function cancelReservation(Request $request)
+    public function cancelReservation($id)
     {
-        $reservation = Reservation::findOrFail($request->id);
-        $reservation->delete();
+        $reservation = Reservation::findOrFail($id);
+        $reservation->status = 'cancelled';
+        $reservation->save();
 
-        return redirect()->refresh();
+        return back()->with('success', 'Reservation cancelled.');
     }
 }
