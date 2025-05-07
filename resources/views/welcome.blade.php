@@ -14,12 +14,12 @@
             Find and reserve the services you need in minutes. No hassle, no waiting.
           </p>
           <div class="flex flex-col sm:flex-row justify-center gap-4">
-            <a href="{{route('login')}}">
-              <button class="w-full sm:w-auto bg-white text-brand-600 hover:bg-gray-100 px-8 py-3 rounded-md font-medium">
+            <a href="{{route('login.form')}}">
+              <button class="w-full sm:w-auto bg-white text-brand-600 `ver:bg-gray-100 px-8 py-3 rounded-md font-medium">
                 Login
               </button>
             </a>
-            <a href="{{route('register')}}">
+            <a href="{{route('register.form')}}">
               <button class="w-full sm:w-auto bg-brand-700 text-white hover:bg-brand-800 px-8 py-3 rounded-md font-medium">
                 Sign Up
               </button>

@@ -8,7 +8,7 @@
         <p class="text-gray-600 mt-2">Join ReserveEasy to book services</p>
       </div>
 
-      <form>
+      <form method="POST" action="{{ route('register') }}">
         <div class="grid grid-cols-2 gap-4 mb-4">
           <div>
             <label for="first-name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
@@ -82,7 +82,7 @@
 
       <p class="mt-6 text-center text-sm text-gray-600">
         Already have an account?
-        <a href="{{route('login')}}" class="font-medium text-brand-600 hover:text-brand-500">Login</a>
+        <a href="{{route('login.form')}}" class="font-medium text-brand-600 hover:text-brand-500">Login</a>
       </p>
     </div>
   </main>

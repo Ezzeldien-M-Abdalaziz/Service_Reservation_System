@@ -47,23 +47,22 @@ class UserController extends Controller
         ]);
 
         if (Auth::attempt($request->only('email', 'password'))) {
-            return response()->json([
-                'message' => 'User logged in successfully',
-                'user' => Auth::user(),
-            ]);
-        }else{
-            return response()->json([
-                'message' => 'Invalid credentials',
-            ], 401);
+            // Regenerate session to prevent fixation
+            $request->session()->regenerate();
+
+            return redirect()->intended(route('dashboard.index'));
         }
+
+        // Redirect back with error
+        return back()->withErrors([
+            'email' => 'Invalid email or password.',
+        ])->withInput();
 
     }
 
     public function logout()
     {
         Auth::logout();
-        return response()->json([
-            'message' => 'User logged out successfully',
-        ]);
+        return redirect()->route('home');
     }
 }

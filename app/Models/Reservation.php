@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,8 +13,10 @@ class Reservation extends Model
     protected $fillable = [
         'user_id',
         'service_id',
-        'date_time',
+        'from',
+        'to',
         'status',
+        'paid_price'
     ];
 
     public function user()
@@ -24,5 +27,10 @@ class Reservation extends Model
     public function service()
     {
         return $this->belongsTo(Service::class);
+    }
+
+    public function duration()
+    {
+        return Carbon::parse($this->from)->diffInMinutes(Carbon::parse($this->to));
     }
 }

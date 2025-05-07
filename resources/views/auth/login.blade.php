@@ -8,12 +8,24 @@
           <p class="text-gray-600 mt-2">Enter your credentials to access your account</p>
         </div>
 
-        <form>
+        <form method="POST" action="{{ route(name: 'login') }}">
+            @csrf
+
+            @if ($errors->any())
+                <div class="text-red-600 mb-4">
+                    <ul class="list-disc pl-4">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                    </ul>
+                </div>
+            @endif
           <div class="mb-6">
             <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
             <input
               type="email"
               id="email"
+                name="email"
               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500"
               placeholder="your@email.com"
               required
@@ -27,6 +39,7 @@
             <input
               type="password"
               id="password"
+                name="password"
               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500"
               placeholder="••••••••"
               required
@@ -44,7 +57,7 @@
 
         <p class="mt-6 text-center text-sm text-gray-600">
           Don't have an account?
-          <a href="{{route('register')}}" class="font-medium text-brand-600 hover:text-brand-500">Sign up</a>
+          <a href="{{route('register.form')}}" class="font-medium text-brand-600 hover:text-brand-500">Sign up</a>
         </p>
       </div>
     </main>

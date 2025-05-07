@@ -14,8 +14,8 @@
               <ul class="space-y-2">
                 <li><a href="/" class="text-gray-600 hover:text-brand-500">Home</a></li>
                 <li><a href="{{route('services')}}" class="text-gray-600 hover:text-brand-500">Services</a></li>
-                <li><a href="{{route('login')}}" class="text-gray-600 hover:text-brand-500">Login</a></li>
-                <li><a href="{{route('register')}}" class="text-gray-600 hover:text-brand-500">Register</a></li>
+                <li><a href="{{route('login.form')}}" class="text-gray-600 hover:text-brand-500">Login</a></li>
+                <li><a href="{{route('register.form')}}" class="text-gray-600 hover:text-brand-500">Register</a></li>
               </ul>
             </div>
 
