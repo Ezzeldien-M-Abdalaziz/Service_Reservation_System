@@ -13,13 +13,13 @@ class DashboardController extends Controller
     {
         $upcomingReservations = Reservation::with('user', 'service')
         ->where('user_id', Auth::user()->id)
-        ->where('to', '>', now())
+        ->where('date', '>', now())
         ->where('status', '!=', 'cancelled')
         ->get();
 
         $pastReservations = Reservation::with('user', 'service')
         ->where('user_id', Auth::user()->id)
-        ->where('to', '<', now())
+        ->where('date', '<', now())
         ->where('status', '!=', 'cancelled')
         ->get();
 
@@ -29,5 +29,11 @@ class DashboardController extends Controller
         ->get();
 
         return view('frontend.dashboard' , compact('upcomingReservations' , 'pastReservations' , 'cancelledReservations'));
+    }
+
+    public function reschedule($id)
+    {
+        $reservation = Reservation::findOrFail($id);
+        return view('frontend.reschedule' , compact('reservation'));
     }
 }

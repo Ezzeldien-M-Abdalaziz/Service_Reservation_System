@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('service_id')->constrained('services')->onDelete('cascade');
-            $table->dateTime('from');
-            $table->dateTime('to');
+            $table->date('date');
+            $table->time('from');
+            $table->time('to');
             $table->enum('status', ['pending', 'confirmed', 'cancelled'])->default('pending');
             $table->decimal('paid_price', 8, 2)->nullable();
             $table->timestamps();

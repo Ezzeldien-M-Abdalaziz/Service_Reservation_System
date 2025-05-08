@@ -51,11 +51,15 @@
               <div>
                 <h3 class="text-lg font-semibold mb-1">{{ $reservation->service->name }}</h3>
                 <div class="flex items-center text-gray-500 text-sm mb-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <span>{{ $reservation->from }}</span>
-                </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <p class="mx-1 flex-1">{{ $reservation->date }}</p>
+                    <span>({{ $reservation->from }}</span>
+                    <span class="mx-1">to</span>
+                    <span>{{ $reservation->to }})</span>
+                  </div>
+
                 <div class="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
                     {{ $reservation->status }}
                 </div>
@@ -66,9 +70,9 @@
               </div>
             </div>
             <div class="mt-4 pt-4 border-t border-gray-100 flex justify-end space-x-2">
-              <button class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-gray-50">
+              <a href="{{route('dashboard.reschedule', $reservation->id)}}" class="px-3 py-1 text-sm border border-gray-300 rounded hover:bg-gray-50">
                 Reschedule
-              </button>
+              </a>
 
               <form action="{{ route('reservation.cancel', $reservation->id) }}" method="POST" class="inline">
                 @csrf
@@ -92,11 +96,14 @@
                 <h3 class="text-lg font-semibold mb-1"></h3>
                 <p class="text-gray-600 mb-1">{{ $reservation->service->name }}</p>
                 <div class="flex items-center text-gray-500 text-sm mb-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
-                  <span>{{ $reservation->from }}</span>
-                </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <p class="mx-1 flex-1">{{ $reservation->date }}</p>
+                    <span>({{ $reservation->from }}</span>
+                    <span class="mx-1">to</span>
+                    <span>{{ $reservation->to }})</span>
+                  </div>
                 <div class="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
                     {{ $reservation->status }}
                 </div>
@@ -129,7 +136,10 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <span>{{ $reservation->from }}</span>
+                    <p class="mx-1 flex-1">{{ $reservation->date }}</p>
+                    <span>({{ $reservation->from }}</span>
+                    <span class="mx-1">to</span>
+                    <span>{{ $reservation->to }})</span>
                   </div>
                   <div class="inline-block px-2 py-1 text-xs font-semibold rounded-full bg-gray-100 text-gray-800">
                       {{ $reservation->status }}

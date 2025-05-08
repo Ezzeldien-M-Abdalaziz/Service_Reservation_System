@@ -18,7 +18,12 @@ class ReservationFactory extends Factory
      */
     public function definition(): array
     {
-        $from = $this->faker->dateTimeBetween('-1 week', '+2 weeks');
+        $startHour = 8; // 8 am
+        $endHour = 20; // 8 pm
+        $hour = $this->faker->numberBetween($startHour, $endHour - 1);
+        $minute = $this->faker->randomElement([0, 30]); // sharp times only
+
+        $from = (new \DateTime())->setTime($hour, $minute);
         $duration = $this->faker->randomElement([30, 60, 90, 120]);
         $to = (clone $from)->modify("+{$duration} minutes");
 
@@ -34,6 +39,7 @@ class ReservationFactory extends Factory
         return [
             'user_id' => User::inRandomOrder()->first()->id ?? User::factory(),
             'service_id' => $service->id,
+            'date' => $this->faker->dateTimeBetween('-1 month', '+1 week')->format('Y-m-d'),
             'from' => $from,
             'to' => $to,
             'status' => $status,
