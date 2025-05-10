@@ -18,7 +18,7 @@ class ServiceController extends Controller
         return view('frontend.services' , compact('services'));
     }
 
-    public function serviceDetails($id)
+    public function bookAService($id)
     {
         if (!Auth::check()) {
             return redirect()->route('login.form')->with('error', 'Please login to view service details.');
@@ -27,13 +27,13 @@ class ServiceController extends Controller
             $service = Service::findOrFail($id);
 
             $unavailableTimesByDate = Reservation::select('date', 'from', 'to')
-            ->where('service_id', $service->id)
             ->where('status', '!=', 'cancelled')
             ->where('date', '>=', now()->format('Y-m-d'))
             ->get([ 'from', 'to'])
             ->groupBy('date');
+            // return $unavailableTimesByDate;
 
-            return view('frontend.service-details', compact('service' , 'unavailableTimesByDate'));
+            return view('frontend.book-service', compact('service' , 'unavailableTimesByDate'));
 
     }
 
@@ -164,4 +164,63 @@ class ServiceController extends Controller
 
         return redirect()->route('dashboard.index')->with('success', 'Reservation updated successfully.');
     }
+
+
+    public function rebookReservation(Request $request){
+        $request->validate([
+            'reservation_id' => 'required|exists:services,id',
+            'date' => 'required|date',
+            'from' => 'required|date_format:H:i',
+            'to' => 'required|date_format:H:i|after:from',
+        ]);
+
+        $reservation = Reservation::findOrFail($request->reservation_id);
+
+        //constaints
+        if($request->date < now()->format('Y-m-d')){
+            return back()->withErrors(['error' => 'You cannot book a service in the past.']);
+        }
+
+        if($request->from < now()->format('H:i')){
+            return back()->withErrors(['error' => 'You cannot book a service in the past.']);
+        }
+
+
+
+        // Check if this service is already reserved at this time
+        $isReserved = Reservation::where('id', $reservation->id)
+            ->where('date', $request->date)
+            ->where(function ($query) use ($request) {
+                $query->whereBetween('from', [$request->from, $request->to])
+                    ->orWhereBetween('to', [$request->from, $request->to]);
+            })
+            ->where('status', '!=', 'cancelled')
+            ->exists();
+
+        if ($isReserved) {
+            return back()->withErrors(['error' => 'This service is already booked at the selected time.']);
+        }
+
+        // check user's existing reservation at that time
+        $userConflict = Reservation::where('user_id', Auth::user()->id)
+            ->where('date', $request->date)
+            ->where(function ($query) use ($request) {
+                $query->whereBetween('from', [$request->from, $request->to])
+                    ->orWhereBetween('to', [$request->from, $request->to]);
+            })
+            ->exists();
+
+        if ($userConflict) {
+            return back()->withErrors(['error' => 'You already have a reservation at this time.']);
+        }
+
+        // update reservation
+        $reservation->update([
+            'date' => $request->date,
+            'from' => $request->from,
+            'to' => $request->to,
+        ]);
+
+        return redirect()->route('dashboard.index')->with('success', 'Reservation booked Again successfully!');
+        }
 }

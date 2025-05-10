@@ -27,7 +27,7 @@ route::get('/services', [ServiceController::class , 'services'])->name('services
 //auth routes
 Route::middleware('auth')->group(function () {
     //services
-    route::get('/services/{id}', [ServiceController::class , 'serviceDetails'])->name('service.details');
+    route::get('/services/{id}', [ServiceController::class , 'bookAService'])->name('book-service');
     route::post('reservation/{id}/cancel' , [ServiceController::class , 'cancelReservation'])->name('reservation.cancel');
     route::post('reservation/book' , [ServiceController::class , 'bookReservation'])->name('reservation.book');
     Route::patch('reservation/{id}/update' , [ServiceController::class , 'updateReservation'])->name('reservation.update');
@@ -35,6 +35,7 @@ Route::middleware('auth')->group(function () {
     //dashboard routes
     Route::get('/dashboard', [DashboardController::class , 'dashboard'])->name('dashboard.index');
     Route::get('/dashboard/reservations/{id}/reschedule', [DashboardController::class , 'reschedule'])->name('dashboard.reschedule');
+    Route::get('/dashboard/reservations/{id}/book-again', [DashboardController::class , 'bookAgain'])->name('dashboard.book-again');
 
     //logout
     Route::post('/logout' , [UserController::class , 'logout'])->name('logout');

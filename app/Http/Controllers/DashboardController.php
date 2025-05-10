@@ -49,4 +49,19 @@ class DashboardController extends Controller
 
         return view('frontend.reschedule' , compact('reservation' , 'unavailableTimesByDate'));
     }
+
+    public function bookAgain($id){
+        if (!Auth::check()) {
+            return redirect()->route('login.form')->with('error', 'Please login to view service details.');
+        }
+            $reservation = Reservation::findOrFail($id);
+
+            $unavailableTimesByDate = Reservation::select('date', 'from', 'to')
+            ->where('id', $id)
+            ->where('status', '!=', 'cancelled')
+            ->where('date', '>=', now()->format('Y-m-d'))
+            ->get([ 'from', 'to'])
+            ->groupBy('date');
+        return view('frontend.book-again' , compact('reservation' , 'unavailableTimesByDate'));
+    }
 }
