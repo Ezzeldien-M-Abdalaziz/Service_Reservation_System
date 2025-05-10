@@ -68,11 +68,12 @@ class ServiceController extends Controller
 
 
     // Check if this service is already reserved at this time
+
     $isReserved = Reservation::where('service_id', $service->id)
         ->where('date', $request->date)
         ->where(function ($query) use ($request) {
-            $query->whereBetween('from', [$request->from, $request->to])
-                ->orWhereBetween('to', [$request->from, $request->to]);
+            $query->where('from', '<', $request->to)
+                  ->where('to', '>', $request->from);
         })
         ->where('status', '!=', 'cancelled')
         ->exists();
@@ -81,12 +82,24 @@ class ServiceController extends Controller
         return back()->withErrors(['error' => 'This service is already booked at the selected time.']);
     }
 
+    $otherReservations = Reservation::where('date', $request->date)
+        ->where(function ($query) use ($request) {
+            $query->where('from', '<', $request->to)
+                ->where('to', '>', $request->from);
+        })
+        ->where('status', '!=', 'cancelled')
+        ->exists();
+
+    if ($otherReservations) {
+        return back()->withErrors(['error' => 'Other service is already booked at the selected time.']);
+    }
+
     // check user's existing reservation at that time
     $userConflict = Reservation::where('user_id', Auth::user()->id)
         ->where('date', $request->date)
         ->where(function ($query) use ($request) {
-            $query->whereBetween('from', [$request->from, $request->to])
-                ->orWhereBetween('to', [$request->from, $request->to]);
+            $query->where('from', '<', $request->to)
+                ->where('to', '>', $request->from);
         })
         ->exists();
 
@@ -165,62 +178,4 @@ class ServiceController extends Controller
         return redirect()->route('dashboard.index')->with('success', 'Reservation updated successfully.');
     }
 
-
-    public function rebookReservation(Request $request){
-        $request->validate([
-            'reservation_id' => 'required|exists:services,id',
-            'date' => 'required|date',
-            'from' => 'required|date_format:H:i',
-            'to' => 'required|date_format:H:i|after:from',
-        ]);
-
-        $reservation = Reservation::findOrFail($request->reservation_id);
-
-        //constaints
-        if($request->date < now()->format('Y-m-d')){
-            return back()->withErrors(['error' => 'You cannot book a service in the past.']);
-        }
-
-        if($request->from < now()->format('H:i')){
-            return back()->withErrors(['error' => 'You cannot book a service in the past.']);
-        }
-
-
-
-        // Check if this service is already reserved at this time
-        $isReserved = Reservation::where('id', $reservation->id)
-            ->where('date', $request->date)
-            ->where(function ($query) use ($request) {
-                $query->whereBetween('from', [$request->from, $request->to])
-                    ->orWhereBetween('to', [$request->from, $request->to]);
-            })
-            ->where('status', '!=', 'cancelled')
-            ->exists();
-
-        if ($isReserved) {
-            return back()->withErrors(['error' => 'This service is already booked at the selected time.']);
-        }
-
-        // check user's existing reservation at that time
-        $userConflict = Reservation::where('user_id', Auth::user()->id)
-            ->where('date', $request->date)
-            ->where(function ($query) use ($request) {
-                $query->whereBetween('from', [$request->from, $request->to])
-                    ->orWhereBetween('to', [$request->from, $request->to]);
-            })
-            ->exists();
-
-        if ($userConflict) {
-            return back()->withErrors(['error' => 'You already have a reservation at this time.']);
-        }
-
-        // update reservation
-        $reservation->update([
-            'date' => $request->date,
-            'from' => $request->from,
-            'to' => $request->to,
-        ]);
-
-        return redirect()->route('dashboard.index')->with('success', 'Reservation booked Again successfully!');
-        }
 }

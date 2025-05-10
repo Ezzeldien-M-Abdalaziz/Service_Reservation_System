@@ -114,9 +114,9 @@
               </div>
             </div>
             <div class="mt-4 pt-4 border-t border-gray-100 flex justify-end">
-              <button class="px-3 py-1 text-sm border border-brand-300 text-brand-600 rounded hover:bg-brand-50">
-                Book Again
-              </button>
+                <a href="{{route('dashboard.book-again', $reservation->id)}}" class="px-3 py-1 text-sm border border-brand-300 text-brand-600 rounded hover:bg-brand-50">
+                    Book Again
+                  </a>
             </div>
           </div>
             @endforeach
@@ -151,9 +151,9 @@
                 </div>
               </div>
               <div class="mt-4 pt-4 border-t border-gray-100 flex justify-end">
-                <button class="px-3 py-1 text-sm border border-brand-300 text-brand-600 rounded hover:bg-brand-50">
+                <a href="{{route('dashboard.book-again', $reservation->id)}}" class="px-3 py-1 text-sm border border-brand-300 text-brand-600 rounded hover:bg-brand-50">
                   Book Again
-                </button>
+                </a>
               </div>
             </div>
               @endforeach

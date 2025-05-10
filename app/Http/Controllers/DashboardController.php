@@ -55,13 +55,14 @@ class DashboardController extends Controller
             return redirect()->route('login.form')->with('error', 'Please login to view service details.');
         }
             $reservation = Reservation::findOrFail($id);
+            $service = $reservation->service;
 
             $unavailableTimesByDate = Reservation::select('date', 'from', 'to')
-            ->where('id', $id)
             ->where('status', '!=', 'cancelled')
             ->where('date', '>=', now()->format('Y-m-d'))
             ->get([ 'from', 'to'])
             ->groupBy('date');
-        return view('frontend.book-again' , compact('reservation' , 'unavailableTimesByDate'));
+
+        return view('frontend.book-service' , compact('reservation', 'service' , 'unavailableTimesByDate'));
     }
 }
