@@ -10,16 +10,15 @@
 
         <form method="POST" action="{{ route(name: 'login') }}">
             @csrf
-
             @if ($errors->any())
-                <div class="text-red-600 mb-4">
-                    <ul class="list-disc pl-4">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                    </ul>
-                </div>
-            @endif
+            <div class="mb-4 text-red-600">
+              <ul class="list-disc list-inside text-sm">
+                @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
+          @endif
           <div class="mb-6">
             <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
             <input

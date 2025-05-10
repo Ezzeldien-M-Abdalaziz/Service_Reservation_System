@@ -13,13 +13,14 @@ class DashboardController extends Controller
     {
         $upcomingReservations = Reservation::with('user', 'service')
         ->where('user_id', Auth::user()->id)
-        ->where('date', '>', now())
+        ->where('date', '>=', now()->format('Y-m-d'))
+        ->where('from', '>', now())
         ->where('status', '!=', 'cancelled')
         ->get();
 
         $pastReservations = Reservation::with('user', 'service')
         ->where('user_id', Auth::user()->id)
-        ->where('date', '<', now())
+        ->where('date', '<', now()->format('Y-m-d'))
         ->where('status', '!=', 'cancelled')
         ->get();
 
@@ -28,12 +29,24 @@ class DashboardController extends Controller
         ->where('status', 'cancelled')
         ->get();
 
+
         return view('frontend.dashboard' , compact('upcomingReservations' , 'pastReservations' , 'cancelledReservations'));
     }
 
     public function reschedule($id)
     {
-        $reservation = Reservation::findOrFail($id);
-        return view('frontend.reschedule' , compact('reservation'));
+        if (!Auth::check()) {
+            return redirect()->route('login.form')->with('error', 'Please login to view service details.');
+        }
+            $reservation = Reservation::findOrFail($id);
+
+            $unavailableTimesByDate = Reservation::select('date', 'from', 'to')
+            ->where('id', $id)
+            ->where('status', '!=', 'cancelled')
+            ->where('date', '>=', now()->format('Y-m-d'))
+            ->get([ 'from', 'to'])
+            ->groupBy('date');
+
+        return view('frontend.reschedule' , compact('reservation' , 'unavailableTimesByDate'));
     }
 }

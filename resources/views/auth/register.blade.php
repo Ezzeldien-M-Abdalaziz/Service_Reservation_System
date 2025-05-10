@@ -1,6 +1,7 @@
 @extends('layouts.frontend.app')
 @section('body')
 
+
 <main class="flex-grow flex items-center justify-center py-12">
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
       <div class="text-center mb-8">
@@ -9,12 +10,23 @@
       </div>
 
       <form method="POST" action="{{ route('register') }}">
+        @csrf
+        @if ($errors->any())
+        <div class="mb-4 text-red-600">
+          <ul class="list-disc list-inside text-sm">
+            @foreach ($errors->all() as $error)
+              <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+      @endif
         <div class="grid grid-cols-2 gap-4 mb-4">
           <div>
-            <label for="first-name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
+            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Name</label>
             <input
               type="text"
-              id="first-name"
+              id="name"
+              name="name"
               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500"
               required
             />
@@ -24,7 +36,8 @@
             <label for="last-name" class="block text-sm font-medium text-gray-700 mb-1">User Name</label>
             <input
               type="text"
-              id="last-name"
+              id="username"
+                name="username"
               class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500"
               required
             />
@@ -36,6 +49,7 @@
           <input
             type="email"
             id="email"
+            name="email"
             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500"
             placeholder="your@email.com"
             required
@@ -48,6 +62,7 @@
           <input
             type="password"
             id="password"
+            name="password"
             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500"
             placeholder="••••••••"
             required
@@ -59,6 +74,7 @@
           <input
             type="password"
             id="confirm-password"
+            name="password_confirmation"
             class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500"
             placeholder="••••••••"
             required

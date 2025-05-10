@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -21,19 +22,20 @@ class UserController extends Controller
             'username.required' => 'Username is required',
             'email.required' => 'Email is required',
             'password.required' => 'Password is required',
+            'password.confirmed' => 'Password confirmation does not match',
         ]);
 
-        User::create([
+       $user = User::create([
             'name' => $request->name,
             'username' => $request->username,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => Hash::make($request->password),
         ]);
 
-        return response()->json([
-            'message' => 'User registered successfully',
-        ], 201);
+        Auth::login($user , true);
+        $request->session()->regenerate();
 
+        return redirect()->route('home')->with('success', 'Registration successful. Welcome!');
     }
 
     public function login(Request $request)
@@ -44,6 +46,7 @@ class UserController extends Controller
         ],[
             'email.required' => 'Email is required',
             'password.required' => 'Password is required',
+
         ]);
 
         if (Auth::attempt($request->only('email', 'password'))) {

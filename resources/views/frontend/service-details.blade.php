@@ -64,6 +64,15 @@
 
               <form action="{{ route('reservation.book') }}" method="POST">
                 @csrf
+                @if ($errors->any())
+                <div class="mb-4 text-red-600">
+                  <ul class="list-disc list-inside text-sm">
+                    @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                    @endforeach
+                  </ul>
+                </div>
+              @endif
                 <input type="hidden" name="service_id" value="{{ $service->id }}">
                 <div class="mb-4">
                   <label for="service-date" class="block text-sm font-medium text-gray-700 mb-1">Select Date</label>
@@ -79,40 +88,76 @@
                 </div>
 
                 <div class="mb-4">
-                  <label for="service-time" class="block text-sm font-medium text-gray-700 mb-1">Select Time</label>
+                  <label for="from" class="block text-sm font-medium text-gray-700 mb-1">From</label>
                   <select
-                    id="service-time"
+                    id="datePicker"
+                    name="from"
                     class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500"
                     required
                   >
                     <option value="">Select a time</option>
-                    <option value="09:00">9:00 AM</option>
-                    <option value="10:00">10:00 AM</option>
-                    <option value="11:00">11:00 AM</option>
-                    <option value="12:00">12:00 PM</option>
-                    <option value="13:00">1:00 PM</option>
-                    <option value="14:00">2:00 PM</option>
-                    <option value="15:00">3:00 PM</option>
-                    <option value="16:00">4:00 PM</option>
+                    <option value="08:00">8:00 AM</option>
+                    <option value="08:30">8:30 AM</option>
+                      <option value="09:00">9:00 AM</option>
+                      <option value="09:30">9:30 AM</option>
+                      <option value="10:00">10:00 AM</option>
+                      <option value="10:30">10:30 AM</option>
+                      <option value="11:00">11:00 AM</option>
+                      <option value="11:30">11:30 AM</option>
+                      <option value="12:00">12:00 PM</option>
+                      <option value="12:30">12:30 PM</option>
+                      <option value="13:00">1:00 PM</option>
+                      <option value="13:30">1:30 PM</option>
+                      <option value="14:00">2:00 PM</option>
+                      <option value="14:30">2:30 PM</option>
+                      <option value="15:00">3:00 PM</option>
+                      <option value="15:30">3:30 PM</option>
+                      <option value="16:00">4:00 PM</option>
+                      <option value="16:30">4:30 PM</option>
+                      <option value="17:00">5:00 PM</option>
+                      <option value="17:30">5:30 PM</option>
+                      <option value="18:00">6:00 PM</option>
+                      <option value="18:30">6:30 PM</option>
+                      <option value="19:00">7:00 PM</option>
+                      <option value="19:30">7:30 PM</option>
                   </select>
                 </div>
 
                 <div class="mb-4">
-                  <label for="service-hours" class="block text-sm font-medium text-gray-700 mb-1">Number of Hours</label>
-                  <select
-                    id="service-hours"
-                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500"
-                    required
-                  >
-                    <option value="2">2 hours</option>
-                    <option value="3">3 hours</option>
-                    <option value="4" selected>4 hours</option>
-                    <option value="5">5 hours</option>
-                    <option value="6">6 hours</option>
-                    <option value="7">7 hours</option>
-                    <option value="8">8 hours</option>
-                  </select>
-                </div>
+                    <label for="to" class="block text-sm font-medium text-gray-700 mb-1">To</label>
+                    <select
+                      id="datePicker"
+                      name="to"
+                      class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500"
+                      required
+                    >
+                      <option value="">Select a time</option>
+                      <option value="08:30">8:30 AM</option>
+                      <option value="09:00">9:00 AM</option>
+                      <option value="09:30">9:30 AM</option>
+                      <option value="10:00">10:00 AM</option>
+                      <option value="10:30">10:30 AM</option>
+                      <option value="11:00">11:00 AM</option>
+                      <option value="11:30">11:30 AM</option>
+                      <option value="12:00">12:00 PM</option>
+                      <option value="12:30">12:30 PM</option>
+                      <option value="13:00">1:00 PM</option>
+                      <option value="13:30">1:30 PM</option>
+                      <option value="14:00">2:00 PM</option>
+                      <option value="14:30">2:30 PM</option>
+                      <option value="15:00">3:00 PM</option>
+                      <option value="15:30">3:30 PM</option>
+                      <option value="16:00">4:00 PM</option>
+                      <option value="16:30">4:30 PM</option>
+                      <option value="17:00">5:00 PM</option>
+                      <option value="17:30">5:30 PM</option>
+                      <option value="18:00">6:00 PM</option>
+                      <option value="18:30">6:30 PM</option>
+                      <option value="19:00">7:00 PM</option>
+                      <option value="19:30">7:30 PM</option>
+                      <option value="20:00">8:00 PM</option>
+                    </select>
+                  </div>
 
                 <div class="mt-6 p-4 bg-gray-50 rounded-md">
                   <div class="flex justify-between mb-2">
@@ -126,11 +171,8 @@
                 </div>
 
                 <div class="mt-6">
-                    <button
-                      type="button"
-                      class="w-full bg-brand-600 text-white py-3 px-4 rounded-md hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
-                    >
-                      Book Now
+                    <button type="submit" class="w-full bg-brand-600 text-white py-3 px-4 rounded-md hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2">
+                        Book Now
                     </button>
                   </a>
                 </div>
@@ -144,5 +186,74 @@
 
     </div>
     </main>
+
+    <script>
+        const unavailableTimesByDate = @json($unavailableTimesByDate);
+
+        function parseTime(timeStr) {
+            const [hours, minutes] = timeStr.split(':').map(Number);
+            return hours * 60 + minutes;
+        }
+
+        function updateTimeSelects(date) {
+            const fromSelect = document.querySelector('select[name="from"]');
+            const toSelect = document.querySelector('select[name="to"]');
+            const unavailableSlots = unavailableTimesByDate[date] || [];
+
+            // Update 'From' dropdown
+            Array.from(fromSelect.options).forEach(option => {
+                if (option.value === '') return;
+
+                const slotTime = parseTime(option.value);
+                let isUnavailable = false;
+
+                for (const {from, to} of unavailableSlots) {
+                    const fromTime = parseTime(from);
+                    const toTime = parseTime(to);
+
+                    if (slotTime >= fromTime && slotTime < toTime) {
+                        isUnavailable = true;
+                        break;
+                    }
+                }
+
+                option.disabled = isUnavailable;
+                option.style.color = isUnavailable ? '#999' : '';
+            });
+
+            // Update 'To' dropdown
+            Array.from(toSelect.options).forEach(option => {
+                if (option.value === '') return;
+
+                const slotTime = parseTime(option.value);
+                let isUnavailable = false;
+
+                for (const {from, to} of unavailableSlots) {
+                    const fromTime = parseTime(from);
+                    const toTime = parseTime(to);
+
+                    if (slotTime > fromTime && slotTime <= toTime) {
+                        isUnavailable = true;
+                        break;
+                    }
+                }
+
+                option.disabled = isUnavailable;
+                option.style.color = isUnavailable ? '#999' : '';
+            });
+        }
+
+        // Listen for date changes
+        document.getElementById('service-date').addEventListener('change', (e) => {
+            updateTimeSelects(e.target.value);
+        });
+
+        // Initialize on page load if a date is already selected
+        const initialDate = document.getElementById('service-date').value;
+        if (initialDate) {
+            updateTimeSelects(initialDate);
+        }
+    </script>
+
 
     @endsection

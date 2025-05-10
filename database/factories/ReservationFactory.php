@@ -19,12 +19,12 @@ class ReservationFactory extends Factory
     public function definition(): array
     {
         $startHour = 8; // 8 am
-        $endHour = 20; // 8 pm
+        $endHour = 19; // 7 pm
         $hour = $this->faker->numberBetween($startHour, $endHour - 1);
         $minute = $this->faker->randomElement([0, 30]); // sharp times only
 
         $from = (new \DateTime())->setTime($hour, $minute);
-        $duration = $this->faker->randomElement([30, 60, 90, 120]);
+        $duration = $this->faker->randomElement([30, 60]);
         $to = (clone $from)->modify("+{$duration} minutes");
 
         $service = Service::inRandomOrder()->first() ?? Service::factory()->create();
