@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\User\ServiceController;
@@ -13,11 +15,8 @@ Route::get('/login', [HomeController::class , 'login'])->name('login.form');
 Route::get('/register', [HomeController::class , 'register'])->name('register.form');
 
 
-
 //service public routes
 route::get('/services', [ServiceController::class , 'services'])->name('services');
-
-
 
 // User public Routes
     Route::post('/register' , [UserController::class , 'register'])->name('register');
@@ -39,6 +38,39 @@ Route::middleware('auth')->group(function () {
 
     //logout
     Route::post('/logout' , [UserController::class , 'logout'])->name('logout');
+});
+
+
+
+
+                        //********************************ADMIN ROUTES*************************************
+Route::prefix(('admin'))->group(function () {
+
+    Route::get('/login', [AdminController::class, 'loginForm'])->name('admin.login');
+    Route::post('/login', [AdminController::class, 'Adminlogin'])->name('adminLogin.form');
+
+    Route::middleware(['auth:admin'])->group(function () {
+
+        //pages
+        Route::get('/dashboard', [AdminDashboardController::class , 'adminDashboard'])->name('admin.dashboard');
+        Route::get('/reservations', [AdminDashboardController::class , 'reservation'])->name('admin.reservations');
+        Route::get('/users', [AdminDashboardController::class , 'users'])->name('admin.users');
+        Route::get('/services' , [AdminDashboardController::class , 'services'])->name('admin.services');
+
+
+        //service
+        Route::patch('admin/reservations/{id}/status', [AdminDashboardController::class, 'updateStatus'])->name('admin.reservations.status');
+        Route::post('/service/{id}/change-availability', [AdminDashboardController::class, 'ChangeAvailability'])->name('admin.service.change-availability');
+
+
+        //user
+        Route::delete('/users/{id}', [AdminDashboardController::class, 'deleteUser'])->name('admin.user.delete');
+
+
+        //logout
+        Route::post('/logout', [AdminController::class, 'adminLogout'])->name('admin.logout');
+    });
+
 });
 
 

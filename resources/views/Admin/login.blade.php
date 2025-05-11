@@ -1,0 +1,61 @@
+
+@extends('layouts.frontend.app')
+@section('body')
+    <main class="flex-grow flex items-center justify-center py-12">
+      <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <div class="text-center mb-8">
+          <h1 class="text-2xl font-bold text-gray-900">Login to Your Account</h1>
+          <p class="text-gray-600 mt-2">Enter your credentials to access your account</p>
+        </div>
+
+        <form method="POST" action="{{ route(name: 'admin.login') }}">
+            @csrf
+            @if ($errors->any())
+            <div class="mb-4 text-red-600">
+              <ul class="list-disc list-inside text-sm">
+                @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
+          @endif
+          <div class="mb-6">
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+            <input
+              type="email"
+              id="email"
+                name="email"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500"
+              placeholder="your@email.com"
+              required
+            />
+          </div>
+
+          <div class="mb-6">
+            <div class="flex items-center justify-between mb-1">
+              <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+            </div>
+            <input
+              type="password"
+              id="password"
+                name="password"
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-500"
+              placeholder="••••••••"
+              required
+            />
+          </div>
+
+
+          <button
+            type="submit"
+            class="w-full bg-brand-600 text-white py-2 px-4 rounded-md hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2"
+          >
+            Login
+          </button>
+        </form>
+
+      </div>
+    </main>
+
+@endsection
+

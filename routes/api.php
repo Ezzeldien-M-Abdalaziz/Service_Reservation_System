@@ -11,7 +11,7 @@ Route::prefix(('admin'))->group(function () {
 Route::post('/login', [AdminController::class, 'login']);
 Route::post('/register', [AdminController::class, 'register']);
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:admin-api'])->group(function () {
 
     //service crud
     Route::get('/services', [ServiceController::class, 'services']);

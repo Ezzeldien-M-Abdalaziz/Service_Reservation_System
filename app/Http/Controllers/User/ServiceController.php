@@ -42,6 +42,19 @@ class ServiceController extends Controller
     public function cancelReservation($id)
     {
         $reservation = Reservation::findOrFail($id);
+
+        if($reservation->user_id != Auth::user()->id){
+            return back()->with(['error' => 'You are not authorized to cancel this reservation.']);
+        }
+
+        if ($reservation->status == 'cancelled') {
+            return back()->with(['error' => 'This reservation is already cancelled.']);
+        }
+
+        if($reservation->status == 'confirmed'){
+            return back()->with(['error' => 'You cannot cancel a confirmed reservation.']);
+        }
+
         $reservation->status = 'cancelled';
         $reservation->save();
 
