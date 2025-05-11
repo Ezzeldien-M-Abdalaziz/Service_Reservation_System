@@ -19,22 +19,22 @@
         </div>
         <div class="border-t border-gray-200"></div>
         <nav class="p-4 space-y-2">
-            <a href="{{route('admin.dashboard')}}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 rounded-md flex items-center">
+            <a href="{{route('admin.dashboard')}}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 rounded-md items-center">
                 Dashboard
             </a>
-            <a href="{{route('admin.users')}}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 rounded-md flex items-center">
+            <a href="{{route('admin.users')}}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 rounded-md items-center">
                 Users
             </a>
-            <a href="{{route('admin.reservations')}}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 rounded-md flex items-center">
+            <a href="{{route('admin.reservations')}}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 rounded-md items-center">
                 Reservations
             </a>
-            <a href="{{route('admin.services')}}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 rounded-md flex items-center">
+            <a href="{{route('admin.services')}}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-blue-600 rounded-md items-center">
                 Services
             </a>
 
             <form action="{{ route('admin.logout') }}" method="POST">
                 @csrf
-                <button type="submit" class="block w-full text-left px-4 py-2 text-gray-700 rounded-md flex items-center bg-red-400">
+                <button type="submit" class="block w-full text-left px-4 py-2 text-gray-700 rounded-md items-center bg-red-400">
                     Logout
                 </button>
             </form>
