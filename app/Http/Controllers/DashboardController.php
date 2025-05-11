@@ -12,9 +12,14 @@ class DashboardController extends Controller
     public function dashboard()
     {
         $upcomingReservations = Reservation::with('user', 'service')
-        ->where('user_id', Auth::user()->id)
-        ->where('date', '>=', now()->format('Y-m-d'))
-        ->where('from', '>', now())
+        ->where('user_id', Auth::id())
+        ->where(function ($query) {
+        $query->where('date', '>', now()->toDateString())
+              ->orWhere(function ($q) {
+                  $q->where('date', now()->toDateString())
+                    ->where('from', '>', now()->format('H:i:s'));
+              });
+        })
         ->where('status', '!=', 'cancelled')
         ->get();
 

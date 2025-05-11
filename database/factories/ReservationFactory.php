@@ -37,7 +37,7 @@ class ReservationFactory extends Factory
         $paid_price = $status === 'confirmed' ? $service_price_in_min * $duration : null;
 
         return [
-            'user_id' => 1,
+            'user_id' => User::inRandomOrder()->first()->id ?? User::factory()->create()->id,
             'service_id' => $service->id,
             'date' => $this->faker->dateTimeBetween('-1 month', '+1 week')->format('Y-m-d'),
             'from' => $from,

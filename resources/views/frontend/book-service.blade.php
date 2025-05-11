@@ -159,17 +159,6 @@
                     </select>
                   </div>
 
-                <div class="mt-6 p-4 bg-gray-50 rounded-md">
-                  <div class="flex justify-between mb-2">
-                    <span class="text-gray-600">Service Rate</span>
-                    <span class="font-medium">${{ $service->price }}/hour</span>
-                  </div>
-                  <div class="border-t border-gray-200 mt-2 pt-2 flex justify-between font-bold">
-                    <span>Total</span>
-                    <span>$105</span>
-                  </div>
-                </div>
-
                 <div class="mt-6">
                     <button type="submit" class="w-full bg-brand-600 text-white py-3 px-4 rounded-md hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2">
                         Book Now

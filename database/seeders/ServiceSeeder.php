@@ -24,6 +24,11 @@ class ServiceSeeder extends Seeder
             'Therapy Session',
             'Resume Review & Career Advice',
             'Interior Design Consultation',
+            'Pet Grooming Service',
+            'Photography Session',
+            'Website Development',
+            'Social Media Management',
+            'Virtual Assistant Service',
         ];
         foreach ($services as $service) {
             Service::create([
