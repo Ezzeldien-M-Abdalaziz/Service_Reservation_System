@@ -62,6 +62,12 @@ class DashboardController extends Controller
     $reservation->status = $request->status;
     $reservation->save();
 
+    if ($reservation->status == 'confirmed') {
+        $reservation->paid_price = $reservation->service->price * $reservation->duration();
+    } else {
+        $reservation->paid_price = 0;
+    }
+
     return back()->with('success', 'Reservation status updated.');
 }
 
