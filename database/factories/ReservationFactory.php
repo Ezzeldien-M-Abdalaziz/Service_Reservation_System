@@ -17,35 +17,39 @@ class ReservationFactory extends Factory
      * @return array<string, mixed>
      */
     public function definition(): array
-    {
-        $startHour = 8; // 8 am
-        $endHour = 19; // 7 pm
-        $hour = $this->faker->numberBetween($startHour, $endHour - 1);
-        $minute = $this->faker->randomElement([0, 30]); // sharp times only
+{
+    $reservationDate = $this->faker->dateTimeBetween('-1 month', '+1 week');
 
-        $from = (new \DateTime())->setTime($hour, $minute);
-        $duration = $this->faker->randomElement([30, 60]);
-        $to = (clone $from)->modify("+{$duration} minutes");
+    $startHour = 8;
+    $endHour = 19;
+    $hour = $this->faker->numberBetween($startHour, $endHour - 1);
+    $minute = $this->faker->randomElement([0, 30]);
 
-        $service = Service::inRandomOrder()->first() ?? Service::factory()->create();
-        $service_price_in_min = $service->price / 60;
+    // Combine date and time
+    $from = (clone $reservationDate)->setTime($hour, $minute);
+    $duration = $this->faker->randomElement([30, 60]);
+    $to = (clone $from)->modify("+{$duration} minutes");
 
-        $status = $to < now()
-            ? $this->faker->randomElement(['confirmed', 'cancelled'])
-            : $this->faker->randomElement(['confirmed', 'pending']);
+    $service = Service::inRandomOrder()->first() ?? Service::factory()->create();
+    $service_price_in_min = $service->price / 60;
 
-        $paid_price = $status === 'confirmed' ? $service_price_in_min * $duration : null;
+    $status = $to < now()
+        ? $this->faker->randomElement(['confirmed', 'cancelled'])
+        : $this->faker->randomElement(['confirmed', 'pending']);
 
-        return [
-            'user_id' => User::inRandomOrder()->first()->id ?? User::factory()->create()->id,
-            'service_id' => $service->id,
-            'date' => $this->faker->dateTimeBetween('-1 month', '+1 week')->format('Y-m-d'),
-            'from' => $from,
-            'to' => $to,
-            'status' => $status,
-            'paid_price' => $paid_price,
-            'created_at' => now(),
-            'updated_at' => now(),
-        ];
-    }
+    $paid_price = $status === 'confirmed' ? $service_price_in_min * $duration : null;
+
+    return [
+        'user_id' => 1,
+        'service_id' => $service->id,
+        'date' => $reservationDate->format('Y-m-d'),
+        'from' => $from->format('H:i:s'), // assuming TIME column
+        'to' => $to->format('H:i:s'),
+        'status' => $status,
+        'paid_price' => $paid_price,
+        'created_at' => now(),
+        'updated_at' => now(),
+    ];
+}
+
 }
