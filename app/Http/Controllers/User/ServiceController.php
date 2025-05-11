@@ -26,7 +26,9 @@ class ServiceController extends Controller
             return redirect()->route('login.form')->with('error', 'Please login to view service details.');
         }
 
-            $service = Service::findOrFail($id)->where('available', 1)->first();
+            $service = Service::where('id', $id)
+        ->where('available', 1)
+        ->firstOrFail();
 
             $unavailableTimesByDate = Reservation::select('date', 'from', 'to')
             ->where('status', '!=', 'cancelled')

@@ -21,6 +21,7 @@ class DashboardController extends Controller
               });
         })
         ->where('status', '!=', 'cancelled')
+        ->orderBy('date', 'desc')
         ->get();
 
         $pastReservations = Reservation::with('user', 'service')
