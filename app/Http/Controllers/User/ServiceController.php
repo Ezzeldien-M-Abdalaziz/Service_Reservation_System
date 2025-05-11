@@ -13,7 +13,9 @@ class ServiceController extends Controller
 {
     public function services()
     {
-        $services = Service::select('id', 'name' , 'description' , 'price' , 'rating')->paginate('6');
+        $services = Service::select('id', 'name' , 'description' , 'price' , 'rating')
+        ->where('available', 1)
+        ->paginate('6');
 
         return view('frontend.services' , compact('services'));
     }
@@ -24,7 +26,7 @@ class ServiceController extends Controller
             return redirect()->route('login.form')->with('error', 'Please login to view service details.');
         }
 
-            $service = Service::findOrFail($id);
+            $service = Service::findOrFail($id)->where('available', 1)->first();
 
             $unavailableTimesByDate = Reservation::select('date', 'from', 'to')
             ->where('status', '!=', 'cancelled')
@@ -52,6 +54,13 @@ class ServiceController extends Controller
         'date' => 'required|date',
         'from' => 'required|date_format:H:i',
         'to' => 'required|date_format:H:i|after:from',
+    ],[
+        'service_id.required' => 'Service ID is required',
+        'service_id.exists' => 'Service not found',
+        'date.required' => 'Date is required',
+        'from.required' => 'Start time is required',
+        'to.required' => 'End time is required',
+        'to.after' => 'End time must be after start time',
     ]);
 
     $service = Service::findOrFail($request->service_id);
@@ -61,7 +70,7 @@ class ServiceController extends Controller
         return back()->withErrors(['error' => 'You cannot book a service in the past.']);
     }
 
-    if($request->from < now()->format('H:i')){
+    if($request->date == now()->format('Y-m-d') && $request->from < now()->format('H:i')){
         return back()->withErrors(['error' => 'You cannot book a service in the past.']);
     }
 
