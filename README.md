@@ -6,7 +6,7 @@ A Laravel-based admin dashboard for managing user reservations of various servic
 
 1.  Clone the repository:
     ```bash
-    git clone [[https://github.com/your-username/reservation-system.git](https://github.com/your-username/reservation-system.git](https://github.com/Ezzeldien-M-Abdalaziz/Service_Reservation_System.git))
+    git clone https://github.com/Ezzeldien-M-Abdalaziz/Service_Reservation_System.git
     cd reservation-system
     ```
 2.  Install dependencies:
